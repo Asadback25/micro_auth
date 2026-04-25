@@ -1,8 +1,9 @@
 from users.api.v1 import RegisterSerializer
-from users.service import UserService
+from users.service import UserService, OtpToken
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
 
 class RegisterApiView(APIView):
     @staticmethod
@@ -17,3 +18,18 @@ class RegisterApiView(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+# users/api/v1/views.py
+
+
+class VerifyOtpView(APIView):
+
+    def post(self, request):
+        try:
+            OtpToken.verify(
+                request.data.get('email'),
+                request.data.get('code')
+            )
+            return Response({"message": "Verified"})
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
