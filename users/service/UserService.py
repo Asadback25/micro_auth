@@ -12,5 +12,5 @@ class UserService:
             email=email,
             password=password
         )
-        otp = OtpToken.generate_otp()
+        otp = OtpToken.generate_otp(email)
         transaction.on_commit(lambda: EmailTask.send_verify_otp(otp, email))
