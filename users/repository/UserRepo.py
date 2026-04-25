@@ -16,3 +16,12 @@ class UserRepo:
 
         user.save()
         return user
+
+    @staticmethod
+    def get_by_email(email):
+        return CustomUser.objects.filter(email=email).first()
+
+    @staticmethod
+    def activate_user(user):
+        user.is_active = True
+        user.save()
