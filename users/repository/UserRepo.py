@@ -25,3 +25,8 @@ class UserRepo:
     def activate_user(user):
         user.is_active = True
         user.save()
+
+    @staticmethod
+    def set_password(user, password):
+        user.set_password(password)
+        user.save()
